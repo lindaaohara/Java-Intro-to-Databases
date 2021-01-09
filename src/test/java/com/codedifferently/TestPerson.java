@@ -3,14 +3,50 @@ package com.codedifferently;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 public class TestPerson {
+    @Test
+    public void constructorTest01(){
+        Map<String, String> rawData = new HashMap<>();
+        rawData.put("firstName", "Holly");
+        rawData.put("lastName", "Chaffee");
+        rawData.put("email", "holly@gmail.com");
+        rawData.put("age", "25");
+        Person person = new Person(rawData);
+        String expected = "Holly Chaffee holly@gmail.com 25";
+        String actual = person.toString();
+        Assert.assertEquals("Create a Person with no id", expected, actual);
+    }
+
+    @Test
+    public void constructorTest02(){
+        Map<String, String> rawData = new HashMap<>();
+        String id = UUID.randomUUID().toString();
+        rawData.put("firstName", "Holly");
+        rawData.put("lastName", "Chaffee");
+        rawData.put("email", "holly@gmail.com");
+        rawData.put("age", "25");
+        Person person = new Person(id, rawData);
+        String expected = id;
+        String actual = person.getId();
+        Assert.assertEquals("Create a Person with id", expected, actual);
+    }
     @Test
     public void getEmailTest() {
         //Given
-        Person person = new Person("Tariq", "Hook", "tariq.hook@gmail.com", 42);
+        Map<String, String> rawData = new HashMap<>();
+        String id = UUID.randomUUID().toString();
+        rawData.put("firstName", "Holly");
+        rawData.put("lastName", "Chaffee");
+        rawData.put("email", "holly@gmail.com");
+        rawData.put("age", "25");
+        Person person = new Person(id, rawData);
 
         //When
-        String expected = "tariq.hook@gmail.com";
+        String expected = "holly@gmail.com";
         String actual = person.getEmail();
 
         //Then
@@ -20,10 +56,16 @@ public class TestPerson {
     @Test
     public void getLastName() {
         //Given
-        Person person = new Person("Tariq", "Hook", "tariq.hook@gmail.com", 42);
+        Map<String, String> rawData = new HashMap<>();
+        String id = UUID.randomUUID().toString();
+        rawData.put("firstName", "Holly");
+        rawData.put("lastName", "Chaffee");
+        rawData.put("email", "holly@gmail.com");
+        rawData.put("age", "25");
+        Person person = new Person(id, rawData);
 
         //When
-        String expected = "Hook";
+        String expected = "Chaffee";
         String actual = person.getLastName();
 
         //Then

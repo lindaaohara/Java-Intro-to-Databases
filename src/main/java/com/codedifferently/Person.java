@@ -1,5 +1,6 @@
 package com.codedifferently;
 
+import java.util.Map;
 import java.util.UUID;
 
 public class Person {
@@ -10,22 +11,27 @@ public class Person {
     private Integer age;
 
    //Use this method to create a new person object
-    public Person(String firstName, String lastName, String email, Integer age) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.age = age;
-        id = UUID.randomUUID().toString();
+    public Person(Map<String, String> personData) {
+        this(UUID.randomUUID().toString(), personData);
     }
 
 
     //Use this method when getting a Person from the database
-    public Person(String id, String firstName, String lastName, String email, Integer age) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.age = age;
+    public Person(String id, Map<String, String> personData){
         this.id = id;
+        this.firstName = personDataParserString("firstName", personData);
+        this.lastName = personDataParserString("lastName", personData);
+        this.email = personDataParserString("email", personData);
+        this.age = personDataParserInteger("age", personData);
+
+    }
+
+    private String personDataParserString(String key, Map<String, String> personData){
+        return(personData.containsKey(key)) ? personData.get(key)   : "not set";
+    }
+
+    private Integer personDataParserInteger(String key, Map<String, String> personData){
+        return (personData.containsKey(key)) ? Integer.parseInt(personData.get(key)) : 0;
     }
 
     public String getFirstName() {
@@ -66,6 +72,9 @@ public class Person {
 
     public void setId(String id) {
         this.id = id;
+    }
+    public String toString(){
+        return String.format("%s %s %s %d", firstName, lastName, email, age);
     }
 }
 
